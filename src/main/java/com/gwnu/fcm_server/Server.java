@@ -27,12 +27,10 @@ public class Server {
     private static final Logger logger = LoggerFactory.getLogger(Server.class);
     private static final Gson gson = new Gson();
     private static final String BASE_URL = "https://www.safetydata.go.kr/V2/api/DSSP-IF-00247";
-//    private static final String SERVICE_KEY = "1I7ILC5YHZ5MJ6ML";  // 본인의 서비스 키로 변경
     private static final String SERVICE_KEY = System.getenv("DISASTER_API_KEY");
     private static final long POLLING_INTERVAL = 90000L;  // 144분 (하루 10회 호출 기준)
 
     private long lastMessageSN = 0;
-    private final FcmService fcmService;
     private final FcmController fcmController;
 
     // API 응답 구조를 위한 데이터 클래스들
@@ -170,13 +168,10 @@ public class Server {
                         logger.info("\n{}", formatMessage(message));
 
                         try {
-                            logger.info("재난문자 FCM 보내기 try 부분");
                             String title = message.DST_SE_NM + " - " + message.CRT_DT;
                             String body = message.MSG_CN;
 
                             logger.info("title = {}, body = {}", title, body);
-//                            fcmService.sendMessageToAllDevices(title, body);
-//                            logger.info("fcmserver | fcmController 사이");
                             MessageRequestDTO messageRequestDTO = new MessageRequestDTO(title, body, "FCMMessage");
                             fcmController.sendMessageTopic(messageRequestDTO);
                             logger.info("sendMessageTopic 완료");

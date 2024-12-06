@@ -2,7 +2,6 @@ package com.gwnu.fcm_server;
 
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.gwnu.fcm_server.Controller.FcmController;
-import com.gwnu.fcm_server.Dto.MessageRequestDTO;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
