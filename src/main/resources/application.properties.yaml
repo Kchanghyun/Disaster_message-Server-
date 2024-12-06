@@ -1,0 +1,10 @@
+spring:
+  application.name=FCM_Server
+
+server:
+  port: 8080
+
+fcm:
+  service-account-file: key/send-fcm-3f25e-firebase-adminsdk-7u69u-65c16bff18.json
+  topic-name: FCMMessage
+  project-id: send-fcm-3f25e
