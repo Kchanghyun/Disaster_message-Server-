@@ -110,7 +110,7 @@ public class Server {
                             new InputStreamReader(connection.getInputStream(), "UTF-8"));
                     String responseText = reader.lines().collect(Collectors.joining("\n"));
                     reader.close();
-                    logger.info("API 응답: {}", responseText);
+                    logger.info("API 호출...");
 
                     ApiResponse response = gson.fromJson(responseText, ApiResponse.class);
                     if ("00".equals(response.header.resultCode)) {

@@ -44,13 +44,13 @@ public class FcmService {
     }
 
     public void sendMessageByTopic(String title, String body) throws IOException, FirebaseMessagingException {
-        FirebaseMessaging.getInstance().send(Message.builder()
-                .setNotification(Notification.builder()
-                        .setTitle(title)
-                        .setBody(body)
-                        .build())
+        Message message = Message.builder()
+                .putData("title", title)
+                .putData("body", body)
                 .setTopic(topicName)
-                .build());
+                .build();
+
+        FirebaseMessaging.getInstance().send(message);
     }
 }
 
