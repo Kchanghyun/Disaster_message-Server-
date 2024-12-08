@@ -3,6 +3,12 @@ spring:
 
 server:
   port: 8080
+  tomcat:
+    uri-encoding: UTF-8
+    max-http-form-post-size: 2MB
+    relaxed-query-chars: "|,{,},[,]"
+    relaxed-path-chars: "|,{,},[,]"
+  max-http-header-size: 16KB
 
 fcm:
   service-account-file: key/send-fcm-3f25e-firebase-adminsdk-7u69u-65c16bff18.json

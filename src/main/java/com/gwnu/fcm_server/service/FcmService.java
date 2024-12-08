@@ -44,13 +44,31 @@ public class FcmService {
     }
 
     public void sendMessageByTopic(String title, String body) throws IOException, FirebaseMessagingException {
-        Message message = Message.builder()
-                .putData("title", title)
-                .putData("body", body)
-                .setTopic(topicName)
-                .build();
+        int maxRetries = 3;
+        int attempt = 0;
 
-        FirebaseMessaging.getInstance().send(message);
+        while (attempt < maxRetries) {
+            try {
+                Message message = Message.builder()
+                        .putData("title", title)
+                        .putData("body", body)
+                        .setTopic(topicName)
+                        .build();
+                String response = FirebaseMessaging.getInstance().send(message);
+                log.info("Message sent successfully: {}", response);
+                return;
+            } catch (FirebaseMessagingException e) {
+                attempt++;
+                log.error("Failed to send message (attempt {}/{}", attempt, maxRetries, e);
+                if (attempt == maxRetries) throw e;
+                try {
+                    Thread.sleep(1000);
+                } catch(InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                    throw e;
+                }
+            }
+        }
     }
 }
 

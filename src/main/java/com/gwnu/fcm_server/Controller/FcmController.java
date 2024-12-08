@@ -20,9 +20,14 @@ public class FcmController {
     @Autowired
     private FcmService fcmService;
 
-    @PostMapping("/api/fcm/message/send")
-    public ResponseEntity sendMessageTopic(@RequestBody MessageRequestDTO requestDTO) throws IOException, FirebaseMessagingException{
-        fcmService.sendMessageByTopic(requestDTO.title, requestDTO.body);
-        return ResponseEntity.ok().build();
+    @PostMapping(value = "/api/fcm/message/send", produces = "application/json;charset=UTF-8")
+    public ResponseEntity<?> sendMessageTopic(@RequestBody MessageRequestDTO requestDTO) throws IOException, FirebaseMessagingException{
+        try {
+            fcmService.sendMessageByTopic(requestDTO.title, requestDTO.body);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            log.error("Error sending message", e);
+            return ResponseEntity.internalServerError().body("Failed to send message");
+        }
     }
 }

@@ -173,8 +173,20 @@ public class Server {
 
                             logger.info("title = {}, body = {}", title, body);
                             MessageRequestDTO messageRequestDTO = new MessageRequestDTO(title, body, "FCMMessage");
-                            fcmController.sendMessageTopic(messageRequestDTO);
-                            logger.info("sendMessageTopic 완료");
+
+                            int retryCount = 0;
+                            while (retryCount < 3) {
+                                try {
+                                    fcmController.sendMessageTopic(messageRequestDTO);
+                                    logger.info("sendMessageTopic 완료");
+                                    break;
+                                } catch (Exception e) {
+                                    retryCount++;
+                                    logger.error("Failed to send message (attempt {}/3)", retryCount, e);
+                                    if (retryCount < 3) Thread.sleep(1000);
+                                    else throw e;
+                                }
+                            }
                         } catch (FirebaseMessagingException e) {
                             logger.error("FCM 메시지 전송 실패", e);
                         }
