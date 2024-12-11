@@ -6,7 +6,6 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
-import com.google.firebase.messaging.Notification;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,7 +42,7 @@ public class FcmService {
         FirebaseApp.initializeApp(options);
     }
 
-    public void sendMessageByTopic(String title, String body) throws IOException, FirebaseMessagingException {
+    public void sendMessageByTopic(String title, String body, String location) throws IOException, FirebaseMessagingException {
         int maxRetries = 3;
         int attempt = 0;
 
@@ -52,8 +51,10 @@ public class FcmService {
                 Message message = Message.builder()
                         .putData("title", title)
                         .putData("body", body)
+                        .putData("location", location)
                         .setTopic(topicName)
                         .build();
+                log.info("Message data: Title: {}, Body: {}, Location: {}", title, body, location);
                 String response = FirebaseMessaging.getInstance().send(message);
                 log.info("Message sent successfully: {}", response);
                 return;

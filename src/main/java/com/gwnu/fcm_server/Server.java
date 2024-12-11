@@ -4,7 +4,6 @@ import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.gson.Gson;
 import com.gwnu.fcm_server.Controller.FcmController;
 import com.gwnu.fcm_server.Dto.MessageRequestDTO;
-import com.gwnu.fcm_server.service.FcmService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -170,10 +169,11 @@ public class Server {
                         try {
                             String title = message.DST_SE_NM + " - " + message.CRT_DT;
                             String body = message.MSG_CN;
+                            String location = message.RCPTN_RGN_NM;
 
-                            logger.info("title = {}, body = {}", title, body);
-                            MessageRequestDTO messageRequestDTO = new MessageRequestDTO(title, body, "FCMMessage");
-
+                            logger.info("title = {}, body = {}, location = {}", title, body, location);
+                            MessageRequestDTO messageRequestDTO = new MessageRequestDTO(title, body, location,"FCMMessage");
+                            logger.info("log + {},{},{}", title, body, location);
                             int retryCount = 0;
                             while (retryCount < 3) {
                                 try {

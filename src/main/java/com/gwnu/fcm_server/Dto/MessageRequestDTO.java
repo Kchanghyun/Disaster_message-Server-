@@ -7,5 +7,7 @@ import lombok.*;
 public class MessageRequestDTO {
     public String title;
     public String body;
+    public String location;
     public String targetToken;
+
 }
