@@ -42,7 +42,7 @@ public class FcmService {
         FirebaseApp.initializeApp(options);
     }
 
-    public void sendMessageByTopic(String title, String body, String location) throws IOException, FirebaseMessagingException {
+    public void sendMessageByTopic(String title, String body, String location) throws FirebaseMessagingException {
         int maxRetries = 3;
         int attempt = 0;
 

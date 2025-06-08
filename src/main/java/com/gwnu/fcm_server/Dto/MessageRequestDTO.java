@@ -9,5 +9,4 @@ public class MessageRequestDTO {
     public String body;
     public String location;
     public String targetToken;
-
 }

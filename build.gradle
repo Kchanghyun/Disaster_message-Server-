@@ -37,6 +37,7 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
 	implementation("com.google.firebase:firebase-admin:9.1.1")
+	implementation 'com.google.firebase:firebase-messaging:21.1.0'
 	implementation("com.squareup.okhttp3:okhttp:4.11.0")
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
 	compileOnly 'org.projectlombok:lombok'

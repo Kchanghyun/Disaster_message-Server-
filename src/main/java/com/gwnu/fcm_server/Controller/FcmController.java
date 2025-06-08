@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
-
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -20,8 +18,9 @@ public class FcmController {
     @Autowired
     private FcmService fcmService;
 
+    // Postman 전용
     @PostMapping(value = "/api/fcm/message/send", produces = "application/json;charset=UTF-8")
-    public ResponseEntity<?> sendMessageTopic(@RequestBody MessageRequestDTO requestDTO) throws IOException, FirebaseMessagingException{
+    public ResponseEntity<?> sendMessageTopic(@RequestBody MessageRequestDTO requestDTO) {
         try {
             fcmService.sendMessageByTopic(requestDTO.title, requestDTO.body, requestDTO.location);
             log.info("{},{},{}", requestDTO.title, requestDTO.body, requestDTO.location);
